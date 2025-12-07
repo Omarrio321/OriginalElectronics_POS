@@ -1,0 +1,7 @@
+{
+  "name": "Original Electronics POS & Inventory",
+  "description": "A comprehensive Inventory and POS management system designed for electronics and accessories retail. Features role-based access, barcode support, stock tracking, and AI-powered financial reporting.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
