@@ -66,6 +66,12 @@ const Inventory: React.FC<InventoryProps> = ({ products, categories, onAddProduc
     setEditingProduct(null);
   };
 
+  const handleDelete = (product: Product) => {
+    if (window.confirm(`Are you sure you want to delete "${product.name}"? This action cannot be undone.`)) {
+      onDeleteProduct(product.id);
+    }
+  };
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -157,11 +163,7 @@ const Inventory: React.FC<InventoryProps> = ({ products, categories, onAddProduc
                       <button type="button" onClick={() => openEditModal(product)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"><Edit2 size={16}/></button>
                       <button 
                         type="button"
-                        onClick={() => {
-                          if (window.confirm('Are you sure you want to delete this product?')) {
-                            onDeleteProduct(product.id);
-                          }
-                        }} 
+                        onClick={() => handleDelete(product)}
                         className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                         title="Delete Product"
                       >
@@ -195,11 +197,7 @@ const Inventory: React.FC<InventoryProps> = ({ products, categories, onAddProduc
                           <button type="button" onClick={() => openEditModal(product)} className="p-1.5 text-blue-600 bg-blue-50 rounded"><Edit2 size={14}/></button>
                           <button 
                             type="button"
-                            onClick={() => {
-                              if (window.confirm('Are you sure you want to delete this product?')) {
-                                onDeleteProduct(product.id);
-                              }
-                            }} 
+                            onClick={() => handleDelete(product)}
                             className="p-1.5 text-red-600 bg-red-50 rounded"
                           >
                             <Trash2 size={14}/>

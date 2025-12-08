@@ -38,6 +38,12 @@ const Expenses: React.FC<ExpensesProps> = ({ expenses, onAddExpense, onDeleteExp
     }
   };
 
+  const handleDelete = (exp: Expense) => {
+    if (window.confirm(`Are you sure you want to delete the expense "${exp.description}"?`)) {
+      onDeleteExpense(exp.id);
+    }
+  };
+
   const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
 
   return (
@@ -140,11 +146,7 @@ const Expenses: React.FC<ExpensesProps> = ({ expenses, onAddExpense, onDeleteExp
                         <td className="p-4 text-right">
                            <button 
                              type="button"
-                             onClick={() => {
-                               if (window.confirm('Are you sure you want to delete this expense?')) {
-                                 onDeleteExpense(exp.id);
-                               }
-                             }} 
+                             onClick={() => handleDelete(exp)} 
                              className="text-gray-400 hover:text-red-600 transition-colors"
                              title="Delete Expense"
                            >

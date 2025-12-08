@@ -145,18 +145,18 @@ const App: React.FC = () => {
 
   // --- INVENTORY HANDLERS ---
   const handleAddProduct = (p: Product) => {
-    setProducts([...products, p]);
+    setProducts(prev => [...prev, p]);
     logAction('INVENTORY_ADD', `Added new product: ${p.name} (${p.sku})`);
   };
 
   const handleUpdateProduct = (p: Product) => {
-    setProducts(products.map(curr => curr.id === p.id ? p : curr));
+    setProducts(prev => prev.map(curr => curr.id === p.id ? p : curr));
     logAction('INVENTORY_UPDATE', `Updated product: ${p.name}`);
   };
 
   const handleDeleteProduct = (id: string) => {
     const product = products.find(p => p.id === id);
-    setProducts(products.filter(p => p.id !== id));
+    setProducts(prev => prev.filter(p => p.id !== id));
     logAction('INVENTORY_DELETE', `Deleted product: ${product?.name || 'Unknown'}`);
   };
 
@@ -195,6 +195,12 @@ const App: React.FC = () => {
 
   const handleDeleteCategory = (c: string) => {
     setCategories(prev => prev.filter(cat => cat !== c));
+  };
+
+  // --- ACTIVITY LOGS HANDLER ---
+  const handleClearActivityLogs = () => {
+    setActivityLogs([]);
+    logAction('DATA_RESTORE', 'Admin cleared activity history');
   };
 
   const handleExportData = () => {
@@ -398,7 +404,7 @@ const App: React.FC = () => {
 
         {view === 'REPORTS' && user.role === UserRole.ADMIN && <Reports sales={sales} products={products} expenses={expenses} />}
         
-        {view === 'ACTIVITY' && user.role === UserRole.ADMIN && <ActivityLogs logs={activityLogs} />}
+        {view === 'ACTIVITY' && user.role === UserRole.ADMIN && <ActivityLogs logs={activityLogs} onClearLogs={handleClearActivityLogs} />}
         
         {view === 'SETTINGS' && user.role === UserRole.ADMIN && (
           <Settings 
